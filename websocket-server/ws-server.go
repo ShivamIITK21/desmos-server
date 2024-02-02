@@ -19,6 +19,8 @@ type WSConnection struct{
     Mut     sync.RWMutex 
 }
 
+var GConn *websocket.Conn
+
 func NewWebSockConnection() *WSConnection{
     wsconn := WSConnection{}
     http.HandleFunc("/echo", func(w http.ResponseWriter, r *http.Request){
@@ -28,6 +30,7 @@ func NewWebSockConnection() *WSConnection{
             log.Fatalln(err)
         }
         wsconn.Conn = conn
+        GConn = conn
         
         for{
             msgType, msg, err := conn.ReadMessage()
