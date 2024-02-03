@@ -29,8 +29,11 @@ HTTP GET http://localhost:8080/remove?id=<base64 encoded id>
 
 For example, to plot a normal distribution from a python application,
 
-```
-requests.get(url = "http://localhost:8080/add", params={"id": toB4("norm"), "exp": toB4(r"""\frac{e^{\frac{-x^2}{2}}}{\sqrt{2\pi}}""")})
+```python
+def toB4(s: str):
+    return base64.b64encode(s.encode("ascii"))
+
+requests.get(url = "http://localhost:8080/add", params={"id": toB64("norm"), "exp": toB64(r"""\frac{e^{\frac{-x^2}{2}}}{\sqrt{2\pi}}""")})
 ```
 
 PS - Some safety features like concurrent write protection on websocket are not added yet 
